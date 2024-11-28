@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        form{
+            height: 60vh;
+            justify-content: space-between;
+            align-items: center;
+            top: 0;
+            height: 100vh;
+            z-index: 10;
+        }
+        input{
+            padding: 10px;
+            font-size: .7em;
+            border-radius: 5px;
+            border: none;
+        }
+        form label{
+            margin-bottom: 10px;
+        }
+        span{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 1.5em;
+            display: flex;
+            flex-direction: column;
+        }
+        select{
+            padding: 10px;
+        }
+        #close{
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: red;
+            background-color: black;
+            padding: 10px 20px;
+            font-size: 1.5em;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+        .hidden{
+            visibility: hidden;
+        }
+        .blog{
+            padding: 20px;
+            border: 1px solid black;
+            height: 100%;
+            margin: 20px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+        .blog h1{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 2em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .blog p{
+            font-size: 1.2em;
+            font-weight: 400;
+        }
+        .cat{
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: white;
+            background-color: black;
+            border-radius: 10px;
+            padding: 10px;
+        }
+        
+    </style>
+</head>
+<body>
+    <main style="position: relative; height: 100vh;">
+    <div style="padding: 20px 20px; background-color: coral; display: flex; flex-direction: column; align-items: center;">
+        <h1 style="font-size: 2em; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin-bottom: 10px;">My Blog</h1>
+        <button class= "new-post" style="cursor: pointer;border-radius: 5px; padding: 10px; background-color: cadetblue; color: white; border: none;">New Post</button>
+    </div>
+    <form action="/post" method="post" class="hidden" style="display: flex; flex-direction: column; background-color: yellow; position: absolute; padding: 40px; box-sizing: border-box; width: 100%;">
+        <span id="close">X</span>
+        <span>
+            <label for="title">Blog Title : </label>
+            <input type="text" placeholder="Title" name="title">
+        </span>
+       <span>
+        <label for="body">Blog Content : </label>
+        <input type="text" placeholder="Blog Content" name="body">
+       </span>
+        <span>
+            <label for="category">Categories : </label>
+        <select name="category" id="category">
+            <option value="uncategorized" selected>Uncategorized</option>
+            <option value="tech">Tech</option>
+            <option value="science">Science</option>
+            <option value="other">Other</option>
+        </select>
+        </span>
+        <input type="submit" style="padding: 10px 20px; border-radius: 10px; border: none;">
+        
+    </form>
+
+    <section class="blog-content">
+       <% if(locals.content){ %>
+        <% for(let i = 0; i<content.length; i++){ %>
+            <div class="blog">
+                <h1><%= content[i].title %></h1>
+                <p><%= content[i].body %></p>
+                <p class="cat"><%= content[i].category %></p>
+            </div>
+            <% } %>
+       <% } %>
+    </section>
+</main>
+<script>
+    document.querySelector('#close').addEventListener('click', () => {
+        document.querySelector('form').classList.add('hidden');
+    })
+    document.getElementsByClassName('new-post')[0].addEventListener('click', () => {
+        document.querySelector('form').classList.remove('hidden');
+    })
+
+    const title = document.getElementById('titles');
+
+    const blog = document.getElementsByClassName('blog-content')[0];
+</script>
+</body>
+</html>
